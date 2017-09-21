@@ -53,7 +53,7 @@ header
   height: 56px
   padding: 0 16px 0 24px
   background-color: $main-green
-  color: $main-red
+  color: $strange-color
 
 
 header span
@@ -68,7 +68,7 @@ header span
 
 
 header .routes
-  color: $main-red
+  color: $strange-color
   display: flex
   flex-direction: row
   flex-wrap: nowrap

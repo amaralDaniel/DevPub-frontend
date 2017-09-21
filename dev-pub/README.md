@@ -1,6 +1,6 @@
 # dev-pub
 
-> sort of a space that gathers developers to talk about situations and solutions dev related
+> A Vue.js project
 
 ## Build Setup
 

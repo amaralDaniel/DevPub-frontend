@@ -40,7 +40,7 @@ export default {
 
   .title
     float: left
-    color: $main-red
+    color: $strange-color
     font-weight: 900
 
   .user
