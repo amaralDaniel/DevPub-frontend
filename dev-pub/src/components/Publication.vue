@@ -1,7 +1,8 @@
 <template lang="html">
   <div class="post">
+    <a class="category">#{{ category }}</a>
     <div class="title-user">
-      <a href="https://www.elastic.co/blog/psd2-architectures-with-the-elastic-stack" class=" title"> {{ title }}  </a>
+      <a href="https://www.elastic.co/blog/psd2-architectures-with-the-elastic-stack" class="title"> {{ title }}  </a>
       <a class="user"> by {{ user }} </a>
     </div>
     <div class="abstract"> {{ abstract }} </div>
@@ -11,10 +12,12 @@
 
 <script>
 export default {
+  props: ['data'],
   data () {
     return {
       postDate: '17 September \'17',
       title: 'PSD2: Modern Banking API Architectures with the Elastic Stack',
+      category: 'webuilt',
       user: 'poster',
       abstract: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'
     }
@@ -61,5 +64,8 @@ export default {
     font-weight: 400
     margin: 0 auto
     color: black
+
+    .category
+      margin-left: 1rem
 
 </style>
