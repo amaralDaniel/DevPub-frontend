@@ -1,31 +1,36 @@
 <template>
   <div id="app">
     <header>
-      <span>DevPub</span>
+      <router-link class="dev-pub" to="/">DevPub</router-link>
       <div class="routes">
-        <a>/itHappened</a>
-        <a>/weSolved</a>
-        <a>/weBuilt</a>
-        <a>/faq</a>
-        <a>/subscribe</a>
+        <router-link to="/ithappened">/itHappened</router-link>
+        <router-link to="/wesolved">/weSolved</router-link>
+        <router-link to="/webuilt">/weBuilt</router-link>
+        <router-link to="/faq">/faq</router-link>
+        <router-link to="/subscribe">/subscribe</router-link>
       </div>
     </header>
     <main>
-      <!-- <img src="./assets/logo.png" alt="Vue.js PWA"> -->
-      <!-- <router-view></router-view> -->
+      <transition>
+        <keep-alive>
+          <router-view></router-view>
+        </keep-alive>
+      </transition>
+      <!-- <Publication data="hello!"></Publication>
       <Publication></Publication>
-      <Publication></Publication>
-      <Publication></Publication>
+      <Publication></Publication> -->
     </main>
   </div>
 </template>
 
 <script>
 import Publication from './components/Publication'
+import ItHappened from './components/ItHappened'
 export default {
   name: 'app',
   components: {
-    Publication
+    Publication,
+    ItHappened
   }
 }
 </script>
@@ -56,7 +61,7 @@ header
   color: $strange-color
 
 
-header span
+header .dev-pub
   display: block
   position: relative
   font-size: 20px
@@ -65,6 +70,8 @@ header span
   font-weight: 900
   box-sizing: border-box
   padding-top: 16px
+  color: $strange-color
+  text-decoration: none
 
 
 header .routes
@@ -81,7 +88,9 @@ header .routes
   font-weight: 700
   box-sizing: border-box
 
-  a
+  router-link
     padding-right: 10px
+    color: $strange-color
+    text-decoration: none
 
 </style>
