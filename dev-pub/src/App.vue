@@ -1,19 +1,22 @@
 <template>
   <div id="app">
     <header>
-      <router-link class="dev-pub" to="/">DevPub</router-link>
+      <router-link class="dev-pub" to="/">devPub</router-link>
+    </header>
+    <main>
       <div class="routes">
         <router-link to="/ithappened">/itHappened</router-link>
         <router-link to="/wesolved">/weSolved</router-link>
         <router-link to="/webuilt">/weBuilt</router-link>
-        <router-link to="/faq">/faq</router-link>
-        <router-link to="/subscribe">/subscribe</router-link>
+        <!--<router-link to="/faq">/faq</router-link>
+        <router-link to="/subscribe">/subscribe</router-link>-->
       </div>
-    </header>
-    <main>
+      <router-link to="/publish">
+        <button>Share with the community</button>
+      </router-link>
       <transition>
         <keep-alive>
-          <router-view></router-view>
+          <router-view :key="$route.fullPath"></router-view>
         </keep-alive>
       </transition>
       <!-- <Publication data="hello!"></Publication>
@@ -45,7 +48,7 @@ body
   font-family: 'Avenir', Helvetica, Arial, sans-serif
   -webkit-font-smoothing: antialiased
   -moz-osx-font-smoothing: grayscale
-  color: #2c3e50
+  color: $strange-color
 
 
 main
@@ -59,12 +62,13 @@ header
   padding: 0 16px 0 24px
   background-color: $main-green
   color: $strange-color
+  display: flex
 
 
 header .dev-pub
-  display: block
+  display: flex
   position: relative
-  font-size: 20px
+  font-size: 32px
   line-height: 1
   letter-spacing: .02em
   font-weight: 900
@@ -74,21 +78,18 @@ header .dev-pub
   text-decoration: none
 
 
-header .routes
+.routes
   color: $strange-color
   display: flex
-  flex-direction: row
-  flex-wrap: nowrap
-  align-items: center
-  align-content: flex-start
-  float: right
+  margin: auto
+  width: fit-content
   font-size: 16px
   line-height: 1
   letter-spacing: .02em
   font-weight: 700
   box-sizing: border-box
 
-  router-link
+  a
     padding-right: 10px
     color: $strange-color
     text-decoration: none

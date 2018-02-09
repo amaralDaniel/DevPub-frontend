@@ -1,71 +1,167 @@
 <template lang="html">
   <div class="post">
-    <a class="category">#{{ category }}</a>
-    <div class="title-user">
-      <a href="https://www.elastic.co/blog/psd2-architectures-with-the-elastic-stack" class="title"> {{ title }}  </a>
-      <a class="user"> by {{ user }} </a>
-    </div>
-    <div class="abstract"> {{ abstract }} </div>
-    <div class="date"> {{ postDate }} </div>
+    <div>{{ id }}</div>
+    <div><b>{{ dataTitle }}</b></div>
+    <div>{{dataBody}}</div>
+    <span><small>{{dataPubDate}}</small></span>
+    <ul>
+      <div v-for="comment in comments">
+        <span>{{comment.body}}</span>
+        <span><small>{{comment.comment_date}}</small></span>
+      </div>
+    </ul>
+    <span>add a comment</span>
+    <textarea name="comment" id="comment" cols="30" rows="10" placeholder="comment here" v-model="comment.body"></textarea>
+    <button v-on:click="pushComment">Submit comment</button>
   </div>
+
 </template>
 
 <script>
-export default {
-  props: ['data'],
-  data () {
-    return {
-      postDate: '17 September \'17',
-      title: 'PSD2: Modern Banking API Architectures with the Elastic Stack',
-      category: 'webuilt',
-      user: 'poster',
-      abstract: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'
+  import axios from 'axios'
+  export default {
+    props: ['id'],
+    data () {
+      return {
+        dataTitle: '',
+        dataBody: '',
+        dataPubDate: '',
+        dataId: this.$route.params.id,
+        comments: [],
+        comment: {
+          body: '',
+          comment_date: ''
+        }
+      }
+    },
+    beforeRouteUpdate (to, from, next) {
+      this.dataId = to.params.id
+      next()
+    },
+    beforeCreate: function () {
+      console.log('beforeCreate')
+    },
+    created: function () {
+      console.log('created')
+    },
+    beforeMount: function () {
+      console.log('beforeMount')
+    },
+    beforeUpdate: function () {
+      console.log('beforeUpdate')
+    },
+
+    beforeDestroy: function () {
+      console.log('beforeDestroy')
+    },
+    destroyed: function () {
+      console.log('destroyed')
+    },
+    mounted: function () {
+      console.log(this.dataId)
+      axios.get('http://127.0.0.1:5000/post/' + this.dataId)
+        .then(response => {
+          console.log(response)
+          var data = response.data
+          this.dataTitle = data.title
+          this.dataPubDate = data.pub_date
+          this.dataBody = data.body
+          this.getComments()
+        })
+        .catch(error => {
+          console.log(error)
+        })
+    },
+    /*
+    updated: function () {
+      console.log('updated')
+      axios.get('http://127.0.0.1:5000/post/' + this.id)
+        .then(response => {
+          console.log(response)
+          var data = response.data
+          this.dataTitle = data.title
+          this.dataPubDate = data.pub_date
+          this.dataBody = data.body
+          this.getComments()
+        })
+        .catch(error => {
+          console.log(error)
+        })
+    }, */
+    methods: {
+      getComments: function (event) {
+        axios.get('http://127.0.0.1:5000/comment/' + this.dataId)
+          .then(response => {
+            var data = response.data
+            this.comments = []
+            for (var comment in data) {
+              if (data.hasOwnProperty(comment)) {
+                this.comments.push(data[comment])
+              }
+            }
+            this.showComments = true
+          })
+      },
+      pushComment: function (event) {
+        if (this.comment !== '') {
+          axios.post('http://127.0.0.1:5000/comment', {
+            body: this.comment.body,
+            post_id: this.dataId
+          })
+            .then(response => {
+              this.comment.body = ''
+              this.getComments()
+            })
+            .catch(e => {
+              console.log(e)
+            })
+        }
+      }
     }
   }
-}
 </script>
 
 <style lang="sass">
-@import '../styles/variables.scss'
+  @import '../styles/variables.scss'
 
-.post
-  margin: 5vh auto
-  width: 65%
-  // background-color: $main-orange
-  // border-radius: 5px
-  // border: 2px solid $main-green
-  padding: 5px
+  .post
+    margin: 5vh auto
+    width: 65%
+    // background-color: $main-orange
+    // border-radius: 5px
+    // border: 2px solid $main-green
+    padding: 5px
 
-  .title-user
-    width: 100%
-    margin: 5% auto
-    padding-bottom: 5px
+    .title-user
+      width: 100%
+      margin: 5% auto
+      padding-bottom: 5px
 
-  .title
-    float: left
-    color: $strange-color
-    font-weight: 900
+    .title
+      float: left
+      color: $strange-color
+      font-weight: 900
 
-  .user
-    margin-left: 15px
-    margin: 0 0 0 2vh
-    font-weight: 700
-    color: $main-purple
-    float: right
+    .user
+      margin-left: 15px
+      margin: 0 0 0 2vh
+      font-weight: 700
+      color: $main-purple
+      float: right
 
-  .date
-    float: right
-    font-weight: 300
-    font-size: 10px
-    margin: 2vh auto
+    .date
+      float: right
+      font-weight: 300
+      font-size: 10px
+      margin: 2vh auto
 
-  .abstract
-    font-size: 16px
-    font-weight: 400
-    margin: 0 auto
-    color: black
+    .abstract
+      font-size: 16px
+      font-weight: 400
+      margin: 0 auto
+      color: black
 
-    .category
-      margin-left: 1rem
+      .category
+        margin-left: 1rem
 
 </style>

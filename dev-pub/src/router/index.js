@@ -11,11 +11,6 @@ export default new Router({
       component: require('../components/Hello.vue')
     },
     {
-      path: '/pub',
-      name: 'Pub',
-      component: require('../components/Publication.vue')
-    },
-    {
       path: '/ithappened',
       name: 'ItHappened',
       component: require('../components/ItHappened.vue')
@@ -39,6 +34,16 @@ export default new Router({
       path: '/subscribe',
       name: 'Subscribe',
       component: require('../components/Subscribe.vue')
+    },
+    {
+      path: '/post/:id',
+      name: 'Publication',
+      component: require('../components/Publication.vue')
+    },
+    {
+      path: '/publish',
+      name: 'Publisher',
+      component: require('../components/Publisher.vue')
     }
   ]
 })

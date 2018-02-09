@@ -11,5 +11,16 @@ export default {
   })
 }
 </script>
-<style lang="scss" scoped>
+<style lang="sass" >
+@import '../styles/variables.scss'
+
+body
+  margin: 0
+
+#faq
+  font-family: 'Avenir', Helvetica, Arial, sans-serif
+  -webkit-font-smoothing: antialiased
+  -moz-osx-font-smoothing: grayscale
+  color: $strange-color
+  margin: 5%
 </style>
