@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <input v-model="title" placeholder="Give it a title">
+  <div class="editor-main">
+    <input class="post-title" v-model="title" placeholder="Insert the title here">
     <quill-editor v-model="content"
                   ref="myQuillEditor"
                   :options="editorOption"
@@ -9,14 +9,24 @@
                   @ready="onEditorReady($event)">
     </quill-editor>
 
-    <span>Section:</span>
-    <select v-model="selected" placeholder="Choose one">
-      <option v-for="option in options" v-bind:value="option.value">
-        {{ option.text }}
-      </option>
-    </select>
+    <v-flex xs6>
+      <v-select
+        v-bind:items="items"
+        v-model="selected"
+        label="Section"
+      ></v-select>
+    </v-flex>
 
-    <button v-on:click="postPublication">Share</button>
+
+
+      <!--<select v-model="selected" placeholder="Choose one">
+        <option v-for="option in options" v-bind:value="option.value">
+          {{ option.text }}
+        </option>
+      </select>-->
+
+      <v-btn v-on:click="postPublication" flat class="post-publication-button">Submit publication</v-btn>
+
   </div>
 </template>
 
@@ -40,11 +50,11 @@
         editorOption: {
           // some quill options
         },
-        selected: 'itHappened',
-        options: [
-          { text: '/itHappened', value: 'itHappened' },
-          { text: '/weSolved', value: 'weSolved' },
-          { text: '/weBuilt', value: 'weBuilt' }
+        selected: null,
+        items: [
+          { text: '/itHappened' },
+          { text: '/weSolved' },
+          { text: '/weBuilt' }
         ],
         title: ''
       }
@@ -67,7 +77,7 @@
         axios.post('http://127.0.0.1:5000/post', {
           body: this.content,
           title: this.title,
-          category: this.selected
+          category: this.selected.text
         })
           .then(response => {
             console.log('Submitted')
@@ -88,6 +98,35 @@
   }
 </script>
 
-<style scoped>
+<style lang="sass">
+  @import '../styles/variables.scss'
+
+  .editor-main
+    width: 75vw
+    margin: 0 auto
+    display: flex
+    flex-direction: column
+    flex-wrap: nowrap
+    justify-content: space-around
+    align-items: stretch
+    align-content: stretch
+
+  .quill-editor
+    height: auto
+
+  .post-title
+    width: 55vw
+    margin: 3vh auto 2vh 0
+    height: 3vh
+    font-size: medium
+    outline: none
+
+  .section-selector
+    margin: 2vh 0 1vh auto
+
+  .post-publication-button
+    font-size: small
+    color: $main-green
+
 
 </style>

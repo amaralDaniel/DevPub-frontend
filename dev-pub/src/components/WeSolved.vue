@@ -1,9 +1,8 @@
 <template>
   <div id='wesolved'>
-    <h2>We Solved</h2>
-    <p>Yay we solved it!</p>
+    <p>Yay you solved it! Now share with us how you did it</p>
     <ul id="publication-list">
-      <div v-for="article in articles" :key="article.id">
+      <div v-for="article in articles" >
         <router-link :to="{ name: 'Publication', params: { id: article.id }}">
           <publication-small :title="article.title" :pub_date="article.pub_date" :body="article.body" :id="article.id"></publication-small>
         </router-link>
@@ -23,19 +22,29 @@
       }
     },
     created: function () {
-      axios.get('http://127.0.0.1:5000/weSolved/posts')
-        .then(response => {
-          var data = response.data
-          for (var article in data) {
-            if (data.hasOwnProperty(article)) {
-              this.articles.push(data[article])
+      this.fetchData()
+    },
+    activated: function () {
+      console.log('activated')
+      this.fetchData()
+    },
+    methods: {
+      fetchData: function () {
+        axios.get('http://127.0.0.1:5000/weSolved/posts')
+          .then(response => {
+            var data = response.data
+            this.articles = []
+            for (var article in data) {
+              if (data.hasOwnProperty(article)) {
+                this.articles.push(data[article])
+              }
             }
-          }
-          this.articles.reverse()
-        })
-        .catch(error => {
-          console.log(error)
-        })
+            this.articles.reverse()
+          })
+          .catch(error => {
+            console.log(error)
+          })
+      }
     }
   }
 </script>

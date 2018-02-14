@@ -1,24 +1,48 @@
 <template lang="html">
   <div class="post">
-    <div>{{ id }}</div>
-    <div><b>{{ dataTitle }}</b></div>
-    <div>{{dataBody}}</div>
-    <span><small>{{dataPubDate}}</small></span>
-    <ul>
+
+    <i v-on:click="$router.go(-1)" class="material-icons go-back-arrow">arrow_back</i>
+
+    <div class="publication-title"><b>{{ dataTitle }}</b></div>
+    <span class="date-span">{{dataPubDate}}</span>
+    <div id="data-body">
+    </div>
+    <hr/>
+    <ul class="comments-section">
       <div v-for="comment in comments">
-        <span>{{comment.body}}</span>
-        <span><small>{{comment.comment_date}}</small></span>
+        <div class="single-comment">
+          <span class="comment-date"><small>{{comment.comment_date}}</small></span>
+          <br>
+          <span >{{comment.body}}</span>
+        </div>
+
       </div>
     </ul>
-    <span>add a comment</span>
-    <textarea name="comment" id="comment" cols="30" rows="10" placeholder="comment here" v-model="comment.body"></textarea>
-    <button v-on:click="pushComment">Submit comment</button>
+    <div class="add-comment">
+      <!--<textarea name="comment" id="comment" cols="30" rows="10" placeholder="Insert your commment here" v-model="comment.body"></textarea>-->
+      <v-layout row>
+
+          <v-text-field
+            name="input-7-4"
+            full-width
+            multi-line
+            single-line
+            v-model="comment.body"
+            placeholder="Insert your commment here"
+          ></v-text-field>
+
+      </v-layout>
+      <v-btn flat color="primary" v-on:click="pushComment" class="submit-button">Submit comment</v-btn>
+    </div>
+
   </div>
 
 </template>
 
 <script>
   import axios from 'axios'
+  import $ from 'jquery'
+
   export default {
     props: ['id'],
     data () {
@@ -66,6 +90,14 @@
           this.dataTitle = data.title
           this.dataPubDate = data.pub_date
           this.dataBody = data.body
+          var html = $.parseHTML(data.body)
+          var $data = $('#data-body')
+          // var nodeNames = []
+
+          $data.append(html)
+          // $.each(html, function (i, el) {
+          //   nodeNames[i] = '<li>' + el.nodeName + '</li>'
+          // })
           this.getComments()
         })
         .catch(error => {
@@ -163,5 +195,57 @@
 
       .category
         margin-left: 1rem
+
+    .publication-title
+      font-weight: 700
+      font-size: xx-large
+
+    .date-span
+      font-size: x-small
+      float: right
+
+    #data-body
+      margin-top: 5vh
+      font-size: large
+
+    hr
+      display: block
+      height: 1px
+      border: 0
+      border-top: 1px solid #ccc
+      margin: 1em 0
+      padding: 0
+
+    .comments-section
+      background: $greenish-grey
+      padding: 1vh
+
+    .single-comment
+      background: white
+      padding: 0.5vh
+      margin-top: 1vh
+      font-size: large
+
+    .comment-date
+      font-size: x-small
+
+    .add-comment
+      display: flex
+      flex-direction: column
+      flex-wrap: nowrap
+      justify-content: space-around
+      align-items: stretch
+      align-content: stretch
+      font-size: small
+
+    .submit-button
+      width: fit-content
+      font-size: small
+      color: $main-green
+      float: right
+      margin: 2vh 0 1vh auto
+
+    .go-back-arrow:hover
+      cursor: pointer
 
 </style>

@@ -1,16 +1,33 @@
 <template lang="html">
   <div class="post">
-    <div><b>{{ title }}</b></div>
-    <span><small>{{pub_date}}</small></span>
-
+    <v-flex xs12>
+      <v-card color="white darken-2" class="dark--text">
+        <v-card-title primary-title>
+          <div class="headline">{{ front.title }}</div>
+          <div>{{ front.tldr }}</div>
+        </v-card-title>
+        <v-card-actions >
+          <v-btn flat dark disabled>{{ front.date }}</v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-flex>
   </div>
 </template>
 
 <script>
+  import InfoCard from 'vue-info-card'
   export default {
+    components: {
+      InfoCard
+    },
     props: ['title', 'pub_date', 'id'],
     data () {
       return {
+        front: {
+          date: this.pub_date,
+          title: this.title,
+          tldr: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer malesuada orci at mauris tempor, ut venenatis nulla luctus. Duis vel gravida urna. Morbi sed ipsum risus. Pellentesque elementum fringilla elit, eget ultricies lorem fermentum vitae. Interdum et malesuada fames ac ante ipsum primis in faucibus. Proin sodales nunc in libero.'
+        }
       }
     }
   }
@@ -58,5 +75,8 @@
 
       .category
         margin-left: 1rem
+
+    .v-card
+      text-decoration: none
 
 </style>

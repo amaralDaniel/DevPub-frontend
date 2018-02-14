@@ -1,7 +1,6 @@
 <template>
   <div id="ithappened">
-    <h2>It Happened</h2>
-    <p>It Happened</p>
+    <p>When <i>that</i> thing happened in your office</p>
     <ul id="publication-list">
       <div v-for="article in articles">
         <router-link :to="{ name: 'Publication', params: { id: article.id }}">
@@ -24,19 +23,29 @@ export default {
     }
   },
   created: function () {
-    axios.get('http://127.0.0.1:5000/itHappened/posts')
-      .then(response => {
-        var data = response.data
-        for (var article in data) {
-          if (data.hasOwnProperty(article)) {
-            this.articles.push(data[article])
+    this.fetchData()
+  },
+  activated: function () {
+    console.log('activated')
+    this.fetchData()
+  },
+  methods: {
+    fetchData: function () {
+      axios.get('http://127.0.0.1:5000/itHappened/posts')
+        .then(response => {
+          var data = response.data
+          this.articles = []
+          for (var article in data) {
+            if (data.hasOwnProperty(article)) {
+              this.articles.push(data[article])
+            }
           }
-        }
-        this.articles.reverse()
-      })
-      .catch(error => {
-        console.log(error)
-      })
+          this.articles.reverse()
+        })
+        .catch(error => {
+          console.log(error)
+        })
+    }
   }
 }
 </script>
@@ -53,5 +62,6 @@ body
   -moz-osx-font-smoothing: grayscale
   color: $strange-color
   margin: 5%
+
 
 </style>
