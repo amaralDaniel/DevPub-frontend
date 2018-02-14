@@ -5,13 +5,19 @@ import App from './App'
 import router from './router'
 import axios from 'axios'
 import VueAxios from 'vue-axios'
+import store from './store'
+import Vuetify from 'vuetify'
 
 Vue.config.productionTip = false
 Vue.use(VueAxios, axios)
+Vue.use(Vuetify)
+import('../node_modules/vuetify/dist/vuetify.min.css')
+
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
   router,
+  store,
   axios,
   template: '<App/>',
   components: { App }
