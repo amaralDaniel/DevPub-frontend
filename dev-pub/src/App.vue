@@ -1,50 +1,82 @@
 <template>
-  <div id="app">
-    <header>
-      <router-link class="dev-pub" to="/">devPub_</router-link>
-      <div class="buy-a-coffee">
-        <link href="https://fonts.googleapis.com/css?family=Cookie" rel="stylesheet"><a class="bmc-button" target="_blank" href="https://www.buymeacoffee.com/XC37Kmu9o"><img src="https://www.buymeacoffee.com/assets/img/BMC-btn-logo.svg" alt="Support devPub"><span style="margin-left:5px">Support devPub</span></a>
-      </div>
-    </header>
-    <main>
-      <div class="sub-header">
-        <div class="routes">
-          <router-link to="/ithappened">/itHappened</router-link>
-          <router-link to="/wesolved">/weSolved</router-link>
-          <router-link to="/webuilt">/weBuilt</router-link>
-          <!--<router-link to="/faq">/faq</router-link>
-          <router-link to="/subscribe">/subscribe</router-link>-->
+  <v-app id="app" light>
+    <v-toolbar color="primary" class="" height="65">
+      <v-toolbar-title color="primary" append replace to="/" class="display-1" >devPub_</v-toolbar-title>
+      <v-spacer></v-spacer>
+      <v-toolbar-items >
+        <div class="buy-a-coffee">
+          <link href="https://fonts.googleapis.com/css?family=Cookie" rel="stylesheet"><a class="bmc-button" target="_blank" href="https://www.buymeacoffee.com/XC37Kmu9o"><img src="https://www.buymeacoffee.com/assets/img/BMC-btn-logo.svg" alt="Support devPub"><span style="margin-left:5px">Support devPub</span></a>
         </div>
-        <router-link to="/publish">
-          <button class="share-button">Share with the community</button>
-        </router-link>
-      </div>
-
-
-      <transition>
-        <keep-alive>
-          <router-view :key="$route.fullPath"></router-view>
-        </keep-alive>
+      </v-toolbar-items>
+    </v-toolbar>
+    <v-card class="mt-5 pt-2" flat >
+      <v-bottom-nav absolute :value="true" :active.sync="e1" color="transparent" class="pt-2">
+        <v-btn flat color="secondary" value="/home" append replace to="/home">
+          <span class="subheading">/home</span>
+          <v-icon>home</v-icon>
+        </v-btn>
+        <v-btn flat color="secondary" value="/ithappened" append replace to="/ithappened">
+          <span class="subheading">/ithappened</span>
+          <v-icon>history</v-icon>
+        </v-btn>
+        <v-btn flat color="secondary" value="/wesolved" append replace to="/wesolved">
+          <span class="subheading">/wesolved</span>
+          <v-icon>lightbulb_outline</v-icon>
+        </v-btn>
+        <v-btn flat color="secondary" value="/webuilt" append replace to="/webuilt">
+          <span class="subheading">/webuilt</span>
+          <v-icon>build</v-icon>
+        </v-btn>
+        <v-btn flat color="secondary" value="/publish" append replace  to="/publish">
+          <span class="subheading">/share</span>
+          <v-icon>announcement</v-icon>
+        </v-btn>
+      </v-bottom-nav>
+    </v-card>
+    <main>
+      <transition name="fade" mode="out-in" v-on:after-enter="afterEnter" appear>
+        <router-view :key="$route.fullPath"></router-view>
       </transition>
-      <!-- <Publication data="hello!"></Publication>
-      <Publication></Publication>
-      <Publication></Publication> -->
     </main>
     <v-footer class="pa-3">
       <v-spacer></v-spacer>
       <div>devPub_ © {{ new Date().getFullYear() }}</div>
     </v-footer>
-  </div>
+  </v-app>
 </template>
 
 <script>
   import Publication from './components/Publication'
   import ItHappened from './components/ItHappened'
+
   export default {
     name: 'app',
     components: {
       Publication,
       ItHappened
+    },
+    data () {
+      return {
+        e1: 'recent',
+        active: null,
+        text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.'
+      }
+    },
+    methods: {
+      next () {
+        const active = parseInt(this.active)
+        this.active = (active < 2 ? active + 1 : 0).toString()
+      },
+      afterEnter: function (el) {
+        // how to have this per-route
+        console.log('Route entered')
+      }
+    },
+    beforeRouteUpdate (to, from, next) {
+      const toDepth = to.path.split('/').length
+      const fromDepth = from.path.split('/').length
+      this.transitionName = toDepth < fromDepth ? 'slide-right' : 'slide-left'
+      next()
     }
   }
 </script>
@@ -147,4 +179,11 @@
 
   a, a:visited, a:hover, a:active
     color: inherit
+
+  .fade-enter-active, .fade-leave-active
+    transition: opacity 0.3s
+
+  .fade-enter, .fade-leave-active
+    opacity: 0
+
 </style>

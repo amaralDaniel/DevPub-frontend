@@ -1,32 +1,29 @@
 <template>
   <div class="editor-main">
-    <input class="post-title" v-model="title" placeholder="Insert the title here">
-    <quill-editor v-model="content"
-                  ref="myQuillEditor"
-                  :options="editorOption"
-                  @blur="onEditorBlur($event)"
-                  @focus="onEditorFocus($event)"
-                  @ready="onEditorReady($event)">
-    </quill-editor>
+    <form @submit="checkPublication" action="https://vuejs.org/" method="post">
+      <input class="title my-5 post-title form-control" v-model="title" placeholder="Insert the title here">
+      <quill-editor v-model="content"
+                    ref="myQuillEditor"
+                    :options="editorOption"
+                    @blur="onEditorBlur($event)"
+                    @focus="onEditorFocus($event)"
+                    @ready="onEditorReady($event)">
+      </quill-editor>
 
-    <v-flex xs6>
-      <v-select
-        v-bind:items="items"
-        v-model="selected"
-        label="Section"
-      ></v-select>
-    </v-flex>
+      <v-flex xs6 class="mt-5">
+        <v-select
+          v-bind:items="items"
+          v-model="selected"
+          label="Section"
+        ></v-select>
+      </v-flex>
 
-
-
-      <!--<select v-model="selected" placeholder="Choose one">
-        <option v-for="option in options" v-bind:value="option.value">
-          {{ option.text }}
-        </option>
-      </select>-->
-
-      <v-btn v-on:click="postPublication" flat class="post-publication-button">Submit publication</v-btn>
-
+        <v-flex text-xs-center my-3>
+          <div>
+            <v-btn v-on:click="postPublication"  large color="primary" class="post-publication-button">Submit publication</v-btn>
+          </div>
+        </v-flex>
+    </form>
   </div>
 </template>
 
@@ -123,10 +120,5 @@
 
   .section-selector
     margin: 2vh 0 1vh auto
-
-  .post-publication-button
-    font-size: small
-    color: $main-green
-
 
 </style>

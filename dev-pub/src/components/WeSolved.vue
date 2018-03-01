@@ -1,6 +1,6 @@
 <template>
   <div id='wesolved'>
-    <p>Yay you solved it! Now share with us how you did it</p>
+    <p class="headline">Yay you solved it! Now share with us how you did it</p>
     <ul id="publication-list">
       <div v-for="article in articles" >
         <router-link :to="{ name: 'Publication', params: { id: article.id }}">

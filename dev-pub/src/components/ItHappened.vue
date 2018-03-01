@@ -1,6 +1,6 @@
 <template>
   <div id="ithappened">
-    <p>When <i>that</i> thing happened in your office</p>
+    <p class="headline">When <i>that</i> thing happened in your office</p>
     <ul id="publication-list">
       <div v-for="article in articles">
         <router-link :to="{ name: 'Publication', params: { id: article.id }}">
@@ -19,7 +19,8 @@ export default {
   components: {PublicationSmall},
   data () {
     return {
-      articles: []
+      articles: [],
+      page: 1
     }
   },
   created: function () {

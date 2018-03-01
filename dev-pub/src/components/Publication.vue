@@ -1,8 +1,6 @@
 <template lang="html">
   <div class="post">
-
     <i v-on:click="$router.go(-1)" class="material-icons go-back-arrow">arrow_back</i>
-
     <div class="publication-title"><b>{{ dataTitle }}</b></div>
     <span class="date-span">{{dataPubDate}}</span>
     <div id="data-body">

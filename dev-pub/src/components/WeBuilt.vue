@@ -1,6 +1,6 @@
 <template>
   <div id='webuilt'>
-    <p>Show-off what you've built</p>
+    <p class="headline">Show-off what you've built</p>
     <ul id="publication-list">
       <div v-for="article in articles">
         <router-link :to="{ name: 'Publication', params: { id: article.id }}">
