@@ -2,14 +2,14 @@
   <div class="post">
     <i v-on:click="$router.go(-1)" class="material-icons go-back-arrow">arrow_back</i>
     <div class="publication-title"><b>{{ dataTitle }}</b></div>
-    <span class="date-span">{{dataPubDate}}</span>
+    <span class="date-span">{{ dataPubDate | moment("from" )}}</span>
     <div id="data-body">
     </div>
     <hr/>
     <ul class="comments-section">
       <div v-for="comment in comments">
         <div class="single-comment">
-          <span class="comment-date"><small>{{comment.comment_date}}</small></span>
+          <span class="comment-date"><small>{{ comment.comment_date | moment("from") }}</small></span>
           <br>
           <span >{{comment.body}}</span>
         </div>
@@ -40,6 +40,8 @@
 <script>
   import axios from 'axios'
   import $ from 'jquery'
+  import Vue from 'vue'
+  Vue.use(require('vue-moment'))
 
   export default {
     props: ['id'],
@@ -120,7 +122,7 @@
     }, */
     methods: {
       getComments: function (event) {
-        axios.get('http://127.0.0.1:5000/comment/' + this.dataId)
+        axios.get('https://devpub.herokuapp.com/comment/' + this.dataId)
           .then(response => {
             var data = response.data
             this.comments = []
@@ -134,7 +136,7 @@
       },
       pushComment: function (event) {
         if (this.comment !== '') {
-          axios.post('http://127.0.0.1:5000/comment', {
+          axios.post('https://devpub.herokuapp.com/comment', {
             body: this.comment.body,
             post_id: this.dataId
           })
