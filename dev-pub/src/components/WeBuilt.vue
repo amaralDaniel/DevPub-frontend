@@ -30,7 +30,7 @@
     },
     methods: {
       fetchData: function () {
-        axios.get('http://127.0.0.1:5000/weBuilt/posts')
+        axios.get('https://devpub.herokuapp.com/weBuilt/posts')
           .then(response => {
             var data = response.data
             this.articles = []

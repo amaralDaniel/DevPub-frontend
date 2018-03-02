@@ -139,7 +139,7 @@
       },
       postPublication: function () {
         var _self = this
-        axios.post('http://127.0.0.1:5000/post', {
+        axios.post('https://devpub.herokuapp.com/post', {
           body: this.content,
           title: this.title,
           category: this.selected.text

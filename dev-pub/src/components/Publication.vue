@@ -81,7 +81,7 @@
     },
     mounted: function () {
       console.log(this.dataId)
-      axios.get('http://127.0.0.1:5000/post/' + this.dataId)
+      axios.get('https://devpub.herokuapp.com/post/' + this.dataId)
         .then(response => {
           console.log(response)
           var data = response.data

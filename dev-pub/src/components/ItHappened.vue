@@ -1,6 +1,6 @@
 <template>
   <div id="ithappened">
-    <p class="headline">When <i>that</i> thing happened in your office</p>
+    <p class="headline">When <i>that</i> thing happened</p>
     <ul id="publication-list">
       <div v-for="article in articles">
         <router-link :to="{ name: 'Publication', params: { id: article.id }}">
@@ -32,7 +32,7 @@ export default {
   },
   methods: {
     fetchData: function () {
-      axios.get('http://127.0.0.1:5000/itHappened/posts')
+      axios.get('https://devpub.herokuapp.com/itHappened/posts')
         .then(response => {
           var data = response.data
           this.articles = []
