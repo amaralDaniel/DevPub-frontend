@@ -20,13 +20,13 @@
     components: {
       InfoCard
     },
-    props: ['title', 'pub_date', 'id'],
+    props: ['title', 'pub_date', 'id', 'tldr'],
     data () {
       return {
         front: {
           date: this.pub_date,
           title: this.title,
-          tldr: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer malesuada orci at mauris tempor, ut venenatis nulla luctus. Duis vel gravida urna. Morbi sed ipsum risus. Pellentesque elementum fringilla elit, eget ultricies lorem fermentum vitae. Interdum et malesuada fames ac ante ipsum primis in faucibus. Proin sodales nunc in libero.'
+          tldr: this.tldr
         }
       }
     }

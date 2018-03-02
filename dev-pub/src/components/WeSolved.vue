@@ -4,7 +4,7 @@
     <ul id="publication-list">
       <div v-for="article in articles" >
         <router-link :to="{ name: 'Publication', params: { id: article.id }}">
-          <publication-small :title="article.title" :pub_date="article.pub_date" :body="article.body" :id="article.id"></publication-small>
+          <publication-small :title="article.title" :pub_date="article.pub_date" :body="article.body" :id="article.id" :tldr="article.tldr"></publication-small>
         </router-link>
       </div>
     </ul>
