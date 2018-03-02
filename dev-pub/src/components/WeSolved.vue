@@ -33,6 +33,7 @@
         axios.get('https://devpub.herokuapp.com/weSolved/posts')
           .then(response => {
             var data = response.data
+            console.log(response)
             this.articles = []
             for (var article in data) {
               if (data.hasOwnProperty(article)) {

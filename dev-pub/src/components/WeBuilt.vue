@@ -32,6 +32,7 @@
       fetchData: function () {
         axios.get('https://devpub.herokuapp.com/weBuilt/posts')
           .then(response => {
+            console.log(response)
             var data = response.data
             this.articles = []
             for (var article in data) {

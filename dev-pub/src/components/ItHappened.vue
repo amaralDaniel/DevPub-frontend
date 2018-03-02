@@ -35,6 +35,7 @@ export default {
       axios.get('https://devpub.herokuapp.com/itHappened/posts')
         .then(response => {
           var data = response.data
+          console.log('data', data)
           this.articles = []
           for (var article in data) {
             if (data.hasOwnProperty(article)) {

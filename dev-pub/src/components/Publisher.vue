@@ -139,10 +139,12 @@
       },
       postPublication: function () {
         var _self = this
+        console.log(this.content, this.title, this.selected.text, this.tldr)
         axios.post('https://devpub.herokuapp.com/post', {
           body: this.content,
           title: this.title,
-          category: this.selected.text
+          category: this.selected.text,
+          tldr: this.tldr
         })
           .then(response => {
             console.log('Submitted')

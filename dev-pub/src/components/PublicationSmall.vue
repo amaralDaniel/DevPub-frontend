@@ -1,14 +1,12 @@
 <template lang="html">
   <div class="post">
     <v-flex xs12>
-      <v-card color="white darken-2" class="dark--text">
+      <v-card color="white darken-2" class="dark--text mb-3" height="170">
         <v-card-title primary-title>
           <div class="headline">{{ front.title }}</div>
           <div>{{ front.tldr }}</div>
+          <div class="regular grey--text">{{ front.date | moment("from")}}</div>
         </v-card-title>
-        <v-card-actions >
-          <v-btn flat dark disabled>{{ front.date }}</v-btn>
-        </v-card-actions>
       </v-card>
     </v-flex>
   </div>
@@ -16,17 +14,19 @@
 
 <script>
   import InfoCard from 'vue-info-card'
+  import Vue from 'vue'
+  Vue.use(require('vue-moment'))
   export default {
     components: {
       InfoCard
     },
-    props: ['title', 'pub_date', 'id', 'tldr'],
+    props: ['title', 'pub_date', 'id'],
     data () {
       return {
         front: {
           date: this.pub_date,
           title: this.title,
-          tldr: this.tldr
+          tldr: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer malesuada orci at mauris tempor, ut venenatis nulla luctus. Duis vel gravida urna. Morbi sed ipsum risus. Pellentesque elementum fringilla elit, eget ultricies lorem fermentum vitae. Interdum et malesuada fames ac ante ipsum primis in faucibus. Proin sodales nunc in libero.'
         }
       }
     }
@@ -37,12 +37,11 @@
   @import '../styles/variables.scss'
 
   .post
-    margin: 5vh auto
-    width: 65%
+
     // background-color: $main-orange
     // border-radius: 5px
     // border: 2px solid $main-green
-    padding: 5px
+
 
     .title-user
       width: 100%
