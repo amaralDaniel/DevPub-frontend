@@ -6,7 +6,30 @@
     <div id="data-body">
     </div>
     <hr/>
-    <ul class="comments-section">
+    <span class="subheading">Share on:</span>
+    <social-sharing :url="postURL" inline-template>
+      <div>
+        <network network="facebook">
+          <i class="fab fa-3x fa-facebook-square"></i>
+        </network>
+        <network network="twitter">
+          <i class="fab fa-3x fa-twitter-square"></i>
+        </network>
+        <network network="linkedin">
+          <i class="fab fa-3x fa-linkedin"></i>
+        </network>
+        <network network="vk">
+          <i class="fab fa-3x fa-vk"></i>
+        </network>
+        <network network="weibo">
+          <i class="fab fa-3x fa-weibo"></i>
+        </network>
+
+      </div>
+    </social-sharing>
+
+
+    <ul class="comments-section mt-3">
       <div v-for="comment in comments">
         <div class="single-comment">
           <span class="comment-date"><small>{{ comment.comment_date | moment("from") }}</small></span>
@@ -42,6 +65,8 @@
   import $ from 'jquery'
   import Vue from 'vue'
   Vue.use(require('vue-moment'))
+  var SocialSharing = require('vue-social-sharing')
+  Vue.use(SocialSharing)
 
   export default {
     props: ['id'],
@@ -55,7 +80,8 @@
         comment: {
           body: '',
           comment_date: ''
-        }
+        },
+        postURL: 'https://amaraldaniel.github.io/post' + this.$route.params.id
       }
     },
     beforeRouteUpdate (to, from, next) {
